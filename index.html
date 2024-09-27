@@ -43,12 +43,35 @@
         </div>
     </div>
     <script>
+        const videos = document.querySelectorAll('video');
+
+        function pauseAllVideos() {
+            videos.forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        }
+
+        function handleIntersection(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    pauseAllVideos();
+                    entry.target.play();
+                }
+            });
+        }
+
+        const observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.5
+        });
+
+        videos.forEach(video => {
+            observer.observe(video);
+        });
         document.querySelectorAll('video').forEach(video => {
             video.addEventListener('ended', () => {
-                const next = video.parentElement.nextElementSibling;
-                if (next) {
-                    next.scrollIntoView({ behavior: 'smooth' });
-                }
+            video.currentTime = 0;
+            video.play();
             });
         });
     </script>
