@@ -41,7 +41,7 @@
                 name: 'Kate',
                 videos: [
                     {
-                        name: 'meet-kate',
+                        title: 'meet-kate',
                         src: 'videos/meet-andre.mp4'
                     }
                 ]
@@ -50,7 +50,7 @@
                 name: 'Carolina',
                 videos: [
                     {
-                        name: 'meet-carolina',
+                        title: 'meet-carolina',
                         src: 'videos/meet-andre.mp4'
                     }
                 ]
@@ -59,15 +59,15 @@
                 name: 'Andre',
                 videos: [
                     {
-                        name: 'meet-andre',
+                        title: 'meet-andre',
                         src: 'videos/meet-andre.mp4'
                     },
                     {
-                        name: 'my-day',
+                        title: 'my-day',
                         src: 'videos/my-day.mp4'
                     },
                     {
-                        name: 'my-path',
+                        title: 'my-path',
                         src: 'videos/my-path.mp4'
                     },
                 ]
@@ -79,14 +79,14 @@
         videoLibrary.forEach(person => {
             const videoWrapper = document.createElement('div');
             videoWrapper.className = 'video-wrapper';
+            videoWrapper.id = person.name;
 
             const video = document.createElement('video');
             video.src = person.videos[0].src;
             video.preload = 'auto';
             video.playsInline = true;
-
             videoWrapper.appendChild(video);
-            container.appendChild(videoWrapper);
+            container.appendChild(videoWrapper); 
         });
 
         const videos = document.querySelectorAll('video');
@@ -105,7 +105,24 @@
 
             moreButton.addEventListener('click', (event) => {
                 event.stopPropagation();
-                alert(`More info about ${video.src}`);
+                const person = videoLibrary.find(p => p.name === event.target.parentElement.id);
+                if (person) {
+                    console.log(person);
+                person.videos.slice(1).forEach(videoData => {
+                    const newVideoWrapper = document.createElement('div');
+                    newVideoWrapper.className = 'video-wrapper';
+
+                    const newVideo = document.createElement('video');
+                    newVideo.src = videoData.src;
+                    newVideo.preload = 'auto';
+                    newVideo.playsInline = true;
+
+                    newVideoWrapper.appendChild(newVideo);
+                    container.appendChild(newVideoWrapper);
+                });
+                } else {
+                    console.log('Person not found');
+                }
             });
 
             video.parentElement.appendChild(moreButton);
