@@ -16,6 +16,7 @@
             flex-direction: column;
             height: 100%;
             scroll-snap-type: y mandatory;
+            scroll-snap-stop: always;
             overflow-y: scroll;
         }
         .video-wrapper {
@@ -33,17 +34,50 @@
 <body>
     <div class="container">
         <div class="video-wrapper">
-            <video src="videos/meet-andre.mp4" controls></video>
+            <video src="videos/meet-andre.mp4"></video>
         </div>
         <div class="video-wrapper">
-            <video src="videos/my-day.mp4" controls></video>
+            <video src="videos/my-day.mp4"></video>
         </div>
         <div class="video-wrapper">
-            <video src="videos/my-day.mp4" controls></video>
+            <video src="videos/my-path.mp4"></video>
         </div>
     </div>
     <script>
         const videos = document.querySelectorAll('video');
+
+        videos.forEach(video => {
+            const playIcon = document.createElement('div');
+            playIcon.innerHTML = '▶️';
+            playIcon.style.position = 'absolute';
+            playIcon.style.top = '50%';
+            playIcon.style.left = '50%';
+            playIcon.style.transform = 'translate(-50%, -50%)';
+            playIcon.style.fontSize = '3rem';
+            playIcon.style.color = 'white';
+            playIcon.style.pointerEvents = 'none';
+            playIcon.style.display = 'none';
+            video.parentElement.appendChild(playIcon);
+
+            video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playIcon.style.display = 'none';
+            } else {
+                video.pause();
+                playIcon.style.display = 'block';
+            }
+            });
+
+            video.addEventListener('pause', () => {
+            playIcon.style.display = 'block';
+            });
+
+            video.addEventListener('play', () => {
+            playIcon.style.display = 'none';
+            });
+        });
+
 
         function pauseAllVideos() {
             videos.forEach(video => {
