@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Webpage</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+        .flex-container {
+            display: flex;
+            width: 200%;
+            height: 100%;
+        }
+        .video-feed, .mentor-videos {
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            transition: transform 0.5s ease-in-out;
+            scroll-snap-type: y mandatory;
+            scroll-snap-stop: always;
+            overflow-y: scroll;
+        }
+        button {
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+        }
+        .video-feed {
+            background-color: blue;
+        }
+        .mentor-videos {
+            background-color: red;
+        }
+        .video-feed.active {
+            transform: translateX(0);
+        }
+        .mentor-videos.active {
+            transform: translateX(-100%);
+        }
+        .video-wrapper {
+            flex: 1 0 100%;
+            width: 50%;
+            scroll-snap-align: start;
+            position: relative;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-container">
+        <div class="video-feed">
+            <div class="video-wrapper">
+                <video src="videos/meet-andre.mp4"></video>
+            </div>
+            <div class="video-wrapper">
+                <video src="videos/meet-andre.mp4"></video>
+            </div>
+            <div class="video-wrapper">
+                <video src="videos/meet-andre.mp4"></video>
+            </div>
+            <button>More</button>
+        </div>
+        <div class="mentor-videos active">
+            <button>Back</button>
+        </div>
+    </div>
+    <script>
+        const more = document.querySelector('.video-feed button');
+        const back = document.querySelector('.mentor-videos button');
+        const videoFeed = document.querySelector('.video-feed');
+        const mentorVideos = document.querySelector('.mentor-videos');
+
+        more.addEventListener('click', () => {
+            videoFeed.classList.remove('active');
+            mentorVideos.classList.add('active');
+        });
+
+        back.addEventListener('click', () => {
+            mentorVideos.classList.remove('active');
+            videoFeed.classList.add('active');
+        });
+    </script>
+</body>
+</html>
