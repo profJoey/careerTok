@@ -33,17 +33,62 @@
 </head>
 <body>
     <div class="container">
-        <div class="video-wrapper">
-            <video src="videos/meet-andre.mp4" preload playsinline></video>
-        </div>
-        <div class="video-wrapper">
-            <video src="videos/my-day.mp4" preload playsinline></video>
-        </div>
-        <div class="video-wrapper">
-            <video src="videos/my-path.mp4" preload playsinline></video>
-        </div>
+        <!-- Video elements will be inserted here -->
+        <script>
+            var videoLibrary = [
+                {
+                    name: 'Kate',
+                    videos: [
+                        {
+                            name: 'meet-kate',
+                            src: 'videos/meet-andre.mp4'
+                        }
+                    ]
+                },
+                {
+                    name: 'Carolina',
+                    videos: [
+                        {
+                            name: 'meet-carolina',
+                            src: 'videos/meet-andre.mp4'
+                        }
+                    ]
+                },
+                {
+                    name: 'Andre',
+                    videos: [
+                        {
+                            name: 'meet-andre',
+                            src: 'videos/meet-andre.mp4'
+                        },
+                        {
+                            name: 'my-day',
+                            src: 'videos/my-day.mp4'
+                        },
+                        {
+                            name: 'my-path',
+                            src: 'videos/my-path.mp4'
+                        },
+                    ]
+                }
+            ];
+
+            const container = document.querySelector('.container');
+
+            videoLibrary.forEach(person => {
+                const videoWrapper = document.createElement('div');
+                videoWrapper.className = 'video-wrapper';
+
+                const video = document.createElement('video');
+                video.src = person.videos[0].src;
+                video.preload = 'auto';
+                video.playsInline = true;
+
+                videoWrapper.appendChild(video);
+                container.appendChild(videoWrapper);
+            });
+        </script>
     </div>
-    <script>
         
         const videos = document.querySelectorAll('video');
 
