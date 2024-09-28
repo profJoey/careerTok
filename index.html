@@ -17,13 +17,14 @@
             display: flex;
             width: 200%;
             height: 100%;
+            transition: transform 0.5s ease-in-out;
+            transform: translateX(0);
         }
         .video-feed, .mentor-videos {
             width: 100%;
             height: 100%;
             flex-shrink: 0;
             position: relative;
-            transition: transform 0.5s ease-in-out;
             scroll-snap-type: y mandatory;
             scroll-snap-stop: always;
             overflow-y: scroll;
@@ -34,10 +35,7 @@
         .mentor-videos {
             background-color: red;
         }
-        .video-feed.active {
-            transform: translateX(0);
-        }
-        .mentor-videos.active {
+        .flex-container.active {
             transform: translateX(-100%);
         }
         .video-wrapper {
@@ -64,7 +62,7 @@
 </head>
 <body>
     <div class="flex-container">
-        <div class="video-feed active">
+        <div class="video-feed">
         </div>
         <div class="mentor-videos">
         </div>
@@ -105,6 +103,7 @@ var videoLibrary = [
         ];
         const videoFeed = document.querySelector('.video-feed');
         const mentorVideos = document.querySelector('.mentor-videos');
+        const flexContainer = document.querySelector('.flex-container');
 
         // const more = document.querySelector('.video-feed button');
         const back = document.querySelector('.mentor-videos button');
@@ -124,9 +123,8 @@ var videoLibrary = [
             const moreButton = document.createElement('button');
             moreButton.textContent = 'More from ' + person.name;
             moreButton.className = 'more-button';
+            
             moreButton.addEventListener('click', () => {
-
-
                 event.stopPropagation();
                 const person = videoLibrary.find(p => p.name === event.target.parentElement.id);
                 if (person) {
@@ -153,8 +151,9 @@ var videoLibrary = [
                     backButton.textContent = 'back';
                     backButton.className = 'back-button';
                     backButton.addEventListener('click', () => {
-                        mentorVideos.classList.remove('active');
-                        videoFeed.classList.add('active');
+                        // mentorVideos.classList.remove('active');
+                        // videoFeed.classList.add('active');
+                        flexContainer.classList.toggle('active');
                     });
                     
 
@@ -167,12 +166,10 @@ var videoLibrary = [
                 } else {
                     console.log('Person not found');
                 }
-
-
-
-                videoFeed.classList.remove('active');
-                mentorVideos.classList.add('active');
+                flexContainer.classList.toggle('active');
             });
+
+
             
             const options = {
                     id: person.videos[0].videoId,
