@@ -54,7 +54,7 @@
         }
         button {
             position: absolute;
-            bottom: 60px;
+            top: 60px;
             right: 40px;
             z-index: 1;
         }
@@ -125,6 +125,7 @@ var videoLibrary = [
             moreButton.className = 'more-button';
             
             moreButton.addEventListener('click', () => {
+                // player.setMuted(false);
                 event.stopPropagation();
                 const person = videoLibrary.find(p => p.name === event.target.parentElement.id);
                 if (person) {
@@ -139,10 +140,10 @@ var videoLibrary = [
 
                 const options = {
                     id: videoData.videoId,
-                    background: true,
                     playsinline: true,
                     responsive: true,
-                    autopause: true
+                    autopause: true,
+                    autoplay: true,
                  };
 
                     const player = new Vimeo.Player(wrapperIdtoString, options);
@@ -173,13 +174,14 @@ var videoLibrary = [
             
             const options = {
                     id: person.videos[0].videoId,
-                    background: true,
                     playsinline: true,
                     responsive: true,
-                    autopause: true
+                    autopause: true,
+                    background: true,
             };
 
             const player = new Vimeo.Player(person.name, options);
+            
 
             player.on('loaded', function() {
                 videoWrapper.append(moreButton);
